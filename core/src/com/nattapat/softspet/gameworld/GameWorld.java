@@ -21,7 +21,6 @@ public class GameWorld {
     private void init() {
         initTamagotchi();
         light = new Light();
-//        initTestObject();
     }
 
     private void initTamagotchi() {
