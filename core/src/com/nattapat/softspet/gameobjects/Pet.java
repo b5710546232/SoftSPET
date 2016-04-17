@@ -47,8 +47,8 @@ public class Pet {
         stamina = 5;
         isSick = false;
         isSleeping = false;
-        position = new Vector2(Constants.VIEWPORT_WIDTH / 2 - Assets.pets.get(0).getRegionWidth() / 2,
-                Constants.VIEWPORT_HEIGHT / 2 - Assets.pets.get(0).getRegionHeight() / 1.5f);
+        position = new Vector2(Constants.VIEWPORT_WIDTH / 2 - Assets.texutreArray_pets.get(0).getRegionWidth() / 2,
+                Constants.VIEWPORT_HEIGHT / 2 - Assets.texutreArray_pets.get(0).getRegionHeight() / 1.5f);
     }
 
 

@@ -79,8 +79,6 @@ public class GameRenderer implements Disposable {
     }
 
     private void drawPet(float stateTime){
-//        batch.draw(Assets.pets.get(0), world.getPet().getPosition().x,
-//                world.getPet().getPosition().y);
         batch.draw(Assets.pet_anim_idle.getKeyFrame(stateTime),world.getPet().getPosition().x,
                 world.getPet().getPosition().y);
     }

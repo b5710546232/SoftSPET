@@ -11,7 +11,6 @@ public class SoftspetMain extends Game {
 		Assets.load();
 		GameScreen gameScreen = new GameScreen();
 		this.setScreen(gameScreen);
-
 	}
 
 	@Override
