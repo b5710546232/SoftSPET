@@ -42,7 +42,7 @@ public class GameScreen implements Screen {
                 Constants.VIEWPORT_HEIGHT));
         stage.clear();
         Gdx.input.setInputProcessor(stage);
-        renderer = new com.nattapat.virtualpet.gameworld.GameRenderer(world,(int)gameHeight);
+        renderer = new GameRenderer(world,(int)gameHeight);
        initButton();
     }
 
