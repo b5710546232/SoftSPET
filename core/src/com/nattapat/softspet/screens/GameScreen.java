@@ -81,6 +81,7 @@ public class GameScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
+                if(world.getPet().isActive)
                 world.getPet().eat(10);
             }
         });
@@ -89,6 +90,7 @@ public class GameScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
+                if(world.getPet().isActive)
                 world.getPet().takeMedicine();
             }
         });
@@ -97,7 +99,7 @@ public class GameScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                world.getLight().click();
+                world.switchLight();
             }
         });
 
@@ -105,6 +107,7 @@ public class GameScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
+                if(world.getPet().isActive)
                 world.getPet().takeShower();
             }
         });
@@ -113,6 +116,7 @@ public class GameScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
+                if(world.getPet().isActive)
                 Gdx.app.error(TAG,"should play some game");
             }
         });
@@ -141,7 +145,9 @@ public class GameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
+        renderer.resize(width,height);
         stage.getViewport().update(width, height, true);
+
     }
 
     @Override
@@ -152,7 +158,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void resume() {
-
     }
 
     @Override

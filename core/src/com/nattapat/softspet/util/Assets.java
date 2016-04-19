@@ -75,7 +75,7 @@ public class Assets {
         TextureRegion[] pet_textureRegion_happy = new TextureRegion[2];
         pet_textureRegion_happy[0] = texutreArray_pets.get(12);
         pet_textureRegion_happy[1] = texutreArray_pets.get(13);
-        pet_anim_happy = new Animation(1.0f,pet_textureRegion_happy);
+        pet_anim_happy = new Animation(0.8f,pet_textureRegion_happy);
         pet_anim_happy.setPlayMode(LOOP);
     }
 
@@ -83,7 +83,7 @@ public class Assets {
         TextureRegion[] pet_textureRegion_say_no = new TextureRegion[2];
         pet_textureRegion_say_no[0] = texutreArray_pets.get(10);
         pet_textureRegion_say_no[1] = texutreArray_pets.get(11);
-        pet_anim_take_say_no = new Animation(1.0f,pet_textureRegion_say_no);
+        pet_anim_take_say_no = new Animation(0.8f,pet_textureRegion_say_no);
         pet_anim_take_say_no.setPlayMode(LOOP);
     }
 
@@ -91,7 +91,7 @@ public class Assets {
         TextureRegion[] pet_textureRegion_sleep = new TextureRegion[2];
         pet_textureRegion_sleep[0] = texutreArray_pets.get(8);
         pet_textureRegion_sleep[1] = texutreArray_pets.get(9);
-        pet_anim_sleep = new Animation(1.0f,pet_textureRegion_sleep);
+        pet_anim_sleep = new Animation(0.8f,pet_textureRegion_sleep);
         pet_anim_sleep.setPlayMode(LOOP);
     }
 
@@ -109,7 +109,7 @@ public class Assets {
         TextureRegion[] pet_textureRegion_eat = new TextureRegion[2];
         pet_textureRegion_eat[0] = texutreArray_pets.get(0);
         pet_textureRegion_eat[1] = texutreArray_pets.get(4);
-        pet_anim_eat = new Animation(1.0f,pet_textureRegion_eat);
+        pet_anim_eat = new Animation(0.8f,pet_textureRegion_eat);
         pet_anim_eat.setPlayMode(LOOP);
     }
 

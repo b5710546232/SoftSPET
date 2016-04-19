@@ -1,6 +1,7 @@
 package com.nattapat.softspet.gameobjects;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.nattapat.softspet.util.Assets;
@@ -14,7 +15,7 @@ public class Pet {
 
     private static Pet instance;
 
-
+    private float stateTime;
     private int mood;
     private int health;
     private int hunger;
@@ -25,6 +26,7 @@ public class Pet {
     private boolean isSick;
     private boolean isSleeping;
 
+    public boolean isActive = true;
 
     private final int STAT_MAX = 100;
     private final int STAT_MIN = 0;
@@ -32,9 +34,12 @@ public class Pet {
     private static int counter2 = 0;
 
 
+    private Animation currentAnimation;
+
     private Pet() {
         init();
     }
+
 
     public static Pet getInstance() {
         if (instance == null) instance = new Pet();
@@ -44,9 +49,11 @@ public class Pet {
     private void init() {
         mood = 0;
         hunger = 100;
+        stateTime = 0;
         stamina = 5;
         isSick = false;
         isSleeping = false;
+        setAnimation(Assets.pet_anim_idle);
         position = new Vector2(Constants.VIEWPORT_WIDTH / 2 - Assets.texutreArray_pets.get(0).getRegionWidth() / 2,
                 Constants.VIEWPORT_HEIGHT / 2 - Assets.texutreArray_pets.get(0).getRegionHeight() / 1.5f);
     }
@@ -54,10 +61,10 @@ public class Pet {
 
     public void eat(int point) {
         if(hunger>=STAT_MAX){
-
             log("pet full");
             return;
         }
+        setAnimation(Assets.pet_anim_eat);
         hunger = computeStat(hunger,point);
         log("hunger " + hunger);
         log("pet eat");
@@ -69,12 +76,15 @@ public class Pet {
             isSick = false;
             log("pet take medicine");
         } else {
+            setAnimation(Assets.pet_anim_take_say_no);
             log("pet is not sick");
         }
     }
 
     public void sleep() {
         isSleeping = true;
+        isActive = false;
+        setAnimation(Assets.pet_anim_sleep);
         int value = MathUtils.random(15, 20);
         stamina = computeStat(stamina, value);
     }
@@ -123,6 +133,19 @@ public class Pet {
         mood = computeStat(mood,15);
     }
 
+    public void update(float delta){
+        stateTime+=delta;
+        if(currentAnimation != Assets.pet_anim_idle){
+//            if(currentAnimation.isAnimationFinished(stateTime)){
+//                setAnimation(Assets.pet_anim_idle);
+//            }
+        }
+    }
+
+    public void setAnimation(Animation anim){
+        stateTime = 0;
+        currentAnimation = anim;
+    }
 
     public Vector2 getPosition() {
         return position;
@@ -133,6 +156,17 @@ public class Pet {
     }
 
     public void wake() {
+        isActive = true;
         isSleeping = false;
+        setAnimation(Assets.pet_anim_idle);
     }
+
+    public float getStateTime() {
+        return stateTime;
+    }
+
+    public Animation getCurrentAnimation() {
+        return currentAnimation;
+    }
+
 }

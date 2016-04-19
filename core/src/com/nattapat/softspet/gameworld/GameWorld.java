@@ -1,6 +1,6 @@
 package com.nattapat.softspet.gameworld;
 
-import com.nattapat.softspet.gameobjects.Light;
+import com.badlogic.gdx.Gdx;
 import com.nattapat.softspet.gameobjects.Pet;
 import com.nattapat.softspet.stathandler.StatHandler;
 
@@ -31,10 +31,15 @@ public class GameWorld {
 
 
     public void update(float delta){
+        pet.update(delta);
     }
 
     public void switchLight(){
-        if(!light.isActive()) pet.sleep();
+        light.click();
+        if(!light.isActive()) {
+            pet.sleep();
+            Gdx.app.error(TAG,"sleep");
+        }
         else pet.wake();
 
     }

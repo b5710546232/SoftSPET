@@ -1,4 +1,4 @@
-package com.nattapat.softspet.gameobjects;
+package com.nattapat.softspet.gameworld;
 
 /**
  * Created by nattapat on 4/15/2016 AD.

@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Disposable;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.nattapat.softspet.util.Assets;
 import com.nattapat.softspet.util.Constants;
 
@@ -18,6 +20,7 @@ public class GameRenderer implements Disposable {
     private static final String TAG = GameRenderer.class.getName();
     private GameWorld world;
     private OrthographicCamera camera;
+    private Viewport gameViewport;
     private SpriteBatch batch;
     private ShapeRenderer shapeRenderer;
     private BitmapFont font;
@@ -32,6 +35,7 @@ public class GameRenderer implements Disposable {
     private void initCamera(int gameHeight) {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
+        gameViewport = new FitViewport(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT,camera);
         camera.update();
 
 
@@ -55,7 +59,7 @@ public class GameRenderer implements Disposable {
         batch.enableBlending();
         batch.begin();
         batch.draw(Assets.BG, 0, 0);
-        drawPet(stateTime);
+        drawPet(world.getPet().getStateTime());
         renderGuiFpsCounter(batch);
         batch.end();
         drawLight();
@@ -79,7 +83,7 @@ public class GameRenderer implements Disposable {
     }
 
     private void drawPet(float stateTime){
-        batch.draw(Assets.pet_anim_idle.getKeyFrame(stateTime),world.getPet().getPosition().x,
+        batch.draw(world.getPet().getCurrentAnimation().getKeyFrame(stateTime), world.getPet().getPosition().x,
                 world.getPet().getPosition().y);
     }
 
@@ -93,6 +97,10 @@ public class GameRenderer implements Disposable {
         shapeRenderer.end();
         Gdx.gl.glDisable(GL20.GL_BLEND);
 
+    }
+
+    public void resize(int width, int height){
+        gameViewport.update(width, height);
     }
 
     @Override
