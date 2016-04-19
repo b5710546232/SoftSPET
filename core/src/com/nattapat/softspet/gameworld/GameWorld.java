@@ -1,8 +1,8 @@
 package com.nattapat.softspet.gameworld;
 
 import com.badlogic.gdx.Gdx;
+import com.nattapat.softspet.gameobjects.CleanerWave;
 import com.nattapat.softspet.gameobjects.Pet;
-import com.nattapat.softspet.stathandler.StatHandler;
 
 /**
  * Created by nattapat on 4/6/2016 AD.
@@ -12,7 +12,7 @@ public class GameWorld {
 
     private Pet pet;
     private Light light;
-    private StatHandler statHandler;
+    private CleanerWave cleanerWave;
 
     public GameWorld(){
         init();
@@ -21,17 +21,18 @@ public class GameWorld {
     private void init() {
         initTamagotchi();
         light = new Light();
+        cleanerWave = new CleanerWave();
     }
 
     private void initTamagotchi() {
         pet = Pet.getInstance();
-        statHandler = StatHandler.getInstance(pet);
     }
 
 
 
     public void update(float delta){
         pet.update(delta);
+        cleanerWave.update(delta);
     }
 
     public void switchLight(){
@@ -49,5 +50,14 @@ public class GameWorld {
 
     public Light getLight() {
         return light;
+    }
+
+    public void clean(){
+        pet.takeShower();
+        cleanerWave.clean();
+    }
+
+    public CleanerWave getCleanerWave() {
+        return cleanerWave;
     }
 }

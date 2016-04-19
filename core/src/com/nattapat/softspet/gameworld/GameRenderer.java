@@ -58,11 +58,12 @@ public class GameRenderer implements Disposable {
         batch.setProjectionMatrix(camera.combined);
         batch.enableBlending();
         batch.begin();
-        batch.draw(Assets.BG, 0, 0);
+        drawBG();
         drawPet(world.getPet().getStateTime());
         renderGuiFpsCounter(batch);
-        batch.end();
+        drawWaveCleanner();
         drawLight();
+        batch.end();
     }
 
 
@@ -82,9 +83,20 @@ public class GameRenderer implements Disposable {
         fpsFont.setColor(1, 1, 1, 0.5f); // white
     }
 
+    private void drawBG(){
+        batch.draw(Assets.BG, 0, 0);
+    }
     private void drawPet(float stateTime){
+        if(world.getLight().isActive())
+        batch.draw(Assets.texture_pet_shadow,world.getPet().getShadowPosition().x,world.getPet().getShadowPosition().y);
+
         batch.draw(world.getPet().getCurrentAnimation().getKeyFrame(stateTime), world.getPet().getPosition().x,
                 world.getPet().getPosition().y);
+    }
+
+    private void drawWaveCleanner(){
+        batch.draw(Assets.texture_wave_cleaner,world.getCleanerWave().getPosition().x,
+                world.getCleanerWave().getPosition().y);
     }
 
     private void drawLight(){

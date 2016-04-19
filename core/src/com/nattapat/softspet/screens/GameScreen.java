@@ -81,7 +81,7 @@ public class GameScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                if(world.getPet().isActive)
+                if(world.getPet().isActive && !world.getPet().sleeping)
                 world.getPet().eat(10);
             }
         });
@@ -90,7 +90,7 @@ public class GameScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                if(world.getPet().isActive)
+                if(world.getPet().isActive && !world.getPet().sleeping)
                 world.getPet().takeMedicine();
             }
         });
@@ -99,7 +99,8 @@ public class GameScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                world.switchLight();
+                if(world.getPet().isActive)
+                    world.switchLight();
             }
         });
 
@@ -107,8 +108,8 @@ public class GameScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                if(world.getPet().isActive)
-                world.getPet().takeShower();
+                if(world.getPet().isActive && !world.getPet().sleeping)
+                world.clean();
             }
         });
 
@@ -116,7 +117,7 @@ public class GameScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                if(world.getPet().isActive)
+                if(world.getPet().isActive && !world.getPet().sleeping)
                 Gdx.app.error(TAG,"should play some game");
             }
         });

@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 
 import static com.badlogic.gdx.graphics.g2d.Animation.PlayMode.LOOP;
+import static com.badlogic.gdx.graphics.g2d.Animation.PlayMode.NORMAL;
 
 /**
  * Created by nattapat on 4/8/2016 AD.
@@ -36,11 +37,23 @@ public class Assets {
     public static Animation pet_anim_take_say_no;
     public static Animation pet_anim_happy;
     public static Array<TextureRegion> texutreArray_pets = new Array<TextureRegion>();
+    public static Texture texture_pet_shadow;
+    public static Texture texture_wave_cleaner;
 
     public static void load() {
         loadBG();
         loadButton();
         loadPetAsset();
+        loadPetEffect();
+        loadSceneEffect();
+    }
+
+    private static void loadSceneEffect() {
+        texture_wave_cleaner = new Texture(Gdx.files.internal("cleaner_wave.png"));
+    }
+
+    private static void loadPetEffect() {
+        texture_pet_shadow = new Texture(Gdx.files.internal("pet_shadow.png"));
     }
 
     private static void loadPetAsset() {
@@ -72,19 +85,23 @@ public class Assets {
     }
 
     private static void setAnimPetHappy() {
-        TextureRegion[] pet_textureRegion_happy = new TextureRegion[2];
+        TextureRegion[] pet_textureRegion_happy = new TextureRegion[4];
         pet_textureRegion_happy[0] = texutreArray_pets.get(12);
         pet_textureRegion_happy[1] = texutreArray_pets.get(13);
-        pet_anim_happy = new Animation(0.8f,pet_textureRegion_happy);
-        pet_anim_happy.setPlayMode(LOOP);
+        pet_textureRegion_happy[2] = texutreArray_pets.get(12);
+        pet_textureRegion_happy[3] = texutreArray_pets.get(13);
+        pet_anim_happy = new Animation(1,pet_textureRegion_happy);
+        pet_anim_happy.setPlayMode(NORMAL);
     }
 
     private static void setAnimPetSayNo() {
-        TextureRegion[] pet_textureRegion_say_no = new TextureRegion[2];
+        TextureRegion[] pet_textureRegion_say_no = new TextureRegion[4];
         pet_textureRegion_say_no[0] = texutreArray_pets.get(10);
         pet_textureRegion_say_no[1] = texutreArray_pets.get(11);
+        pet_textureRegion_say_no[2] = texutreArray_pets.get(10);
+        pet_textureRegion_say_no[3] = texutreArray_pets.get(11);
         pet_anim_take_say_no = new Animation(0.8f,pet_textureRegion_say_no);
-        pet_anim_take_say_no.setPlayMode(LOOP);
+        pet_anim_take_say_no.setPlayMode(NORMAL);
     }
 
     private static void setAnimPetSleep() {
@@ -96,21 +113,28 @@ public class Assets {
     }
 
     private static void setAnimPetTakeMed() {
-        TextureRegion[] pet_textureRegion_take_med = new TextureRegion[4];
+        TextureRegion[] pet_textureRegion_take_med = new TextureRegion[6];
         pet_textureRegion_take_med[0] = texutreArray_pets.get(5);
         pet_textureRegion_take_med[1] = texutreArray_pets.get(6);
         pet_textureRegion_take_med[2] = texutreArray_pets.get(5);
         pet_textureRegion_take_med[3] = texutreArray_pets.get(7);
+        pet_textureRegion_take_med[4] = texutreArray_pets.get(6);
+        pet_textureRegion_take_med[5] = texutreArray_pets.get(5);
         pet_anim_take_med = new Animation(0.5f,pet_textureRegion_take_med);
-        pet_anim_take_med.setPlayMode(LOOP);
+        pet_anim_take_med.setPlayMode(NORMAL);
     }
 
     private static void setAnimPetEat() {
-        TextureRegion[] pet_textureRegion_eat = new TextureRegion[2];
-        pet_textureRegion_eat[0] = texutreArray_pets.get(0);
-        pet_textureRegion_eat[1] = texutreArray_pets.get(4);
+        TextureRegion[] pet_textureRegion_eat = new TextureRegion[6];
+        for(int i = 0; i<6;i++){
+            if(i%2==0)
+            pet_textureRegion_eat[i] = texutreArray_pets.get(0);
+            else
+            pet_textureRegion_eat[i] = texutreArray_pets.get(4);
+
+        }
         pet_anim_eat = new Animation(0.8f,pet_textureRegion_eat);
-        pet_anim_eat.setPlayMode(LOOP);
+        pet_anim_eat.setPlayMode(NORMAL);
     }
 
     private static void setAnimPetIdle() {
@@ -160,7 +184,7 @@ public class Assets {
     }
 
     public static void dispose() {
-
+        texture_pet_shadow.dispose();
         texture_bg.dispose();
         texture_button.dispose();
         texture_pet.dispose();
