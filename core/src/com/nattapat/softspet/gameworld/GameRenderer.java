@@ -4,6 +4,7 @@ package com.nattapat.softspet.gameworld;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -11,7 +12,9 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.nattapat.softspet.util.Assets;
+import com.nattapat.softspet.util.Clock;
 import com.nattapat.softspet.util.Constants;
+
 
 /**
  * Created by nattapat on 4/6/2016 AD.
@@ -24,6 +27,8 @@ public class GameRenderer implements Disposable {
     private SpriteBatch batch;
     private ShapeRenderer shapeRenderer;
     private BitmapFont font;
+    private BitmapFont clockfont;
+    private Clock clock;
 
 
     public GameRenderer(GameWorld world , int gameHeight ){
@@ -43,13 +48,16 @@ public class GameRenderer implements Disposable {
     }
 
     private void init() {
-
         batch = new SpriteBatch();
         batch.setProjectionMatrix(camera.combined);
         font = new BitmapFont();
+        clockfont = new BitmapFont(Gdx.files.internal("upheaval_TT_WHITE.fnt"));
+        clockfont.getRegion().getTexture().setFilter(
+                Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        clockfont.getData().setScale(1.5f,1.5f);
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setProjectionMatrix(camera.combined);
-
+        clock = new Clock();
     }
 
 
@@ -63,6 +71,7 @@ public class GameRenderer implements Disposable {
         renderGuiFpsCounter(batch);
         drawWaveCleanner();
         drawLight();
+        clock.render(batch, clockfont);
         batch.end();
     }
 
@@ -94,6 +103,7 @@ public class GameRenderer implements Disposable {
                 world.getPet().getPosition().y);
     }
 
+
     private void drawWaveCleanner(){
         batch.draw(Assets.texture_wave_cleaner,world.getCleanerWave().getPosition().x,
                 world.getCleanerWave().getPosition().y);
@@ -120,6 +130,7 @@ public class GameRenderer implements Disposable {
         batch.dispose();
         shapeRenderer.dispose();
         font.dispose();
+        clockfont.dispose();
     }
 
 
