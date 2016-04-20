@@ -16,7 +16,7 @@ public class Pet {
 
     private static Pet instance;
     private StatHandler statHandler;
-    private float stateTime;
+    public float stateTime;
     private int mood;
     private int health;
     private int hunger;
