@@ -52,7 +52,7 @@ public class Pet {
         mood = 0;
         hunger = 100;
         stamina = 5;
-
+        health = 40;
         statHandler = StatHandler.getInstance(this);
 
         stateTime = 0;
@@ -86,7 +86,8 @@ public class Pet {
         if(sleeping)return;
         if (isSick) {
             health = computeStat(health,10);
-            isSick = false;
+            if (health >= STAT_MAX / 2) isSick = false;
+            isActive = false;
             log("pet take medicine");
             setAnimation(Assets.pet_anim_take_med);
         } else {
@@ -192,5 +193,9 @@ public class Pet {
 
     public Vector2 getShadowPosition() {
         return shadowPosition;
+    }
+
+    public boolean isSick() {
+        return isSick;
     }
 }

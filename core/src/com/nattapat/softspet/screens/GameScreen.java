@@ -91,8 +91,10 @@ public class GameScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                if(world.getPet().isActive && !world.getPet().sleeping)
-                world.getPet().takeMedicine();
+                if(world.getPet().isActive && !world.getPet().sleeping){
+                    world.injectVaccine();
+                }
+
             }
         });
 

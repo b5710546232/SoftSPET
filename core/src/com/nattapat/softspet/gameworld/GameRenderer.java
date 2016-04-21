@@ -54,7 +54,7 @@ public class GameRenderer implements Disposable {
         clockfont = new BitmapFont(Gdx.files.internal("upheaval_TT_WHITE.fnt"));
         clockfont.getRegion().getTexture().setFilter(
                 Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        clockfont.getData().setScale(1.5f,1.5f);
+        clockfont.getData().setScale(1.5f, 1.5f);
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setProjectionMatrix(camera.combined);
         clock = new Clock();
@@ -67,11 +67,12 @@ public class GameRenderer implements Disposable {
         batch.enableBlending();
         batch.begin();
         drawBG();
+        drawVaccine();
         drawPet(world.getPet().getStateTime());
         renderGuiFpsCounter(batch);
         drawWaveCleanner();
         drawLight();
-        clock.render(batch, clockfont);
+//        clock.render(batch, clockfont);
         batch.end();
     }
 
@@ -96,8 +97,8 @@ public class GameRenderer implements Disposable {
         batch.draw(Assets.BG, 0, 0);
     }
     private void drawPet(float stateTime){
-        if(world.getLight().isActive())
-        batch.draw(Assets.texture_pet_shadow,world.getPet().getShadowPosition().x,world.getPet().getShadowPosition().y);
+        if(world.getLight().isActive()) batch.draw(Assets.texture_pet_shadow,world.getPet()
+                .getShadowPosition().x,world.getPet().getShadowPosition().y);
 
         batch.draw(world.getPet().getCurrentAnimation().getKeyFrame(stateTime), world.getPet().getPosition().x,
                 world.getPet().getPosition().y);
@@ -109,6 +110,8 @@ public class GameRenderer implements Disposable {
                 world.getCleanerWave().getPosition().y);
     }
 
+
+
     private void drawLight(){
         if(world.getLight().isActive()) return;
         Gdx.gl.glEnable(GL20.GL_BLEND);
@@ -119,6 +122,17 @@ public class GameRenderer implements Disposable {
         shapeRenderer.end();
         Gdx.gl.glDisable(GL20.GL_BLEND);
 
+    }
+
+    private void drawVaccine(){
+            if(world.getVaccine().active){
+                if(Assets.vaccine_anim.isAnimationFinished(world.getVaccine().getStateTime())){
+                    world.getVaccine().active = false;
+                } else
+                    batch.draw(Assets.vaccine_anim.getKeyFrame(world.getVaccine().getStateTime()),
+                            world.getVaccine().getPosition().x,world.getVaccine().getPosition().y);
+
+            }
     }
 
     public void resize(int width, int height){

@@ -3,6 +3,7 @@ package com.nattapat.softspet.gameworld;
 import com.badlogic.gdx.Gdx;
 import com.nattapat.softspet.gameobjects.CleanerWave;
 import com.nattapat.softspet.gameobjects.Pet;
+import com.nattapat.softspet.gameobjects.Vaccine;
 
 /**
  * Created by nattapat on 4/6/2016 AD.
@@ -12,6 +13,7 @@ public class GameWorld {
 
     private Pet pet;
     private Light light;
+    private Vaccine vaccine;
     private CleanerWave cleanerWave;
 
     public GameWorld(){
@@ -20,7 +22,12 @@ public class GameWorld {
 
     private void init() {
         initTamagotchi();
+        initComponent();
+    }
+
+    private void initComponent() {
         light = new Light();
+        vaccine = new Vaccine();
         cleanerWave = new CleanerWave();
     }
 
@@ -28,10 +35,9 @@ public class GameWorld {
         pet = Pet.getInstance();
     }
 
-
-
     public void update(float delta){
         pet.update(delta);
+        vaccine.update(delta);
         cleanerWave.update(delta);
     }
 
@@ -57,7 +63,19 @@ public class GameWorld {
         cleanerWave.clean();
     }
 
+    public void injectVaccine(){
+        if(pet.isSick()){
+            vaccine.inject();
+        }
+        pet.takeMedicine();
+
+    }
+
     public CleanerWave getCleanerWave() {
         return cleanerWave;
+    }
+
+    public Vaccine getVaccine() {
+        return vaccine;
     }
 }

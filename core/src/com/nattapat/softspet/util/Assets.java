@@ -40,6 +40,7 @@ public class Assets implements Disposable, AssetErrorListener {
     public static Animation pet_anim_sleep;
     public static Animation pet_anim_take_say_no;
     public static Animation pet_anim_happy;
+    public static Animation vaccine_anim;
     public static Array<TextureRegion> texutreArray_pets = new Array<TextureRegion>();
     public static Texture texture_pet_shadow;
     public static Texture texture_wave_cleaner;
@@ -47,6 +48,7 @@ public class Assets implements Disposable, AssetErrorListener {
     public static final String TAG = Assets.class.getName();
     public static final Assets instance = new Assets();
     private AssetManager assetManager;
+    private static Texture texture_vaccine;
 
     public Assets() {
     }
@@ -63,6 +65,21 @@ public class Assets implements Disposable, AssetErrorListener {
         loadPetAsset();
         loadPetEffect();
         loadSceneEffect();
+        loadVaccine();
+    }
+
+    private void loadVaccine() {
+        texture_vaccine = new Texture(Gdx.files.internal("vaccine.png"));
+        texture_vaccine.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        TextureRegion[] vaccine_textureRegion = new TextureRegion[5];
+        vaccine_textureRegion[0] = new TextureRegion(texture_vaccine,0,0,64,64);
+        vaccine_textureRegion[1] = new TextureRegion(texture_vaccine,64,0,64,64);
+        vaccine_textureRegion[2] = new TextureRegion(texture_vaccine,128,0,64,64);
+        vaccine_textureRegion[3] = new TextureRegion(texture_vaccine,192,0,64,64);
+        vaccine_textureRegion[4] = new TextureRegion(texture_vaccine,256,0,64,64);
+        vaccine_anim = new Animation(0.5f,vaccine_textureRegion);
+        vaccine_anim.setPlayMode(NORMAL);
+
     }
 
     private void loadSceneEffect() {
@@ -86,7 +103,6 @@ public class Assets implements Disposable, AssetErrorListener {
     }
 
     private void slipTexturePetToArrayTextureRegions() {
-        Gdx.app.error(TAG, Gdx.files.internal("pet.png").toString());
 //        assetManager.load(Gdx.files.internal("pet.png").toString(), Texture.class);
 //        assetManager.finishLoadingAsset("pet.png");
 //        texture_pet = assetManager.get(Gdx.files.internal("pet.png").toString(), Texture.class);
