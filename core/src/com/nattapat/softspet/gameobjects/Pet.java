@@ -121,6 +121,7 @@ public class Pet {
 
 
     public void reduceHunger() {
+//        log("hunger"+counter++);
         int value = 0;
         if(sleeping)
             value = MathUtils.random(1, 5);

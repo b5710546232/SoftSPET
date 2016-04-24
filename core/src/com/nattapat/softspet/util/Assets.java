@@ -49,6 +49,9 @@ public class Assets implements Disposable, AssetErrorListener {
     public static final Assets instance = new Assets();
     private AssetManager assetManager;
     private static Texture texture_vaccine;
+    private Texture food_texture;
+    public static TextureRegion bread_texutreRegion;
+    public static TextureRegion meat_textureRegion;
 
     public Assets() {
     }
@@ -66,6 +69,13 @@ public class Assets implements Disposable, AssetErrorListener {
         loadPetEffect();
         loadSceneEffect();
         loadVaccine();
+        loadFood();
+    }
+
+    private void loadFood() {
+        food_texture = new Texture(Gdx.files.internal("food.png"));
+        bread_texutreRegion = new TextureRegion(food_texture,0,0,128,128);
+        meat_textureRegion = new TextureRegion(food_texture,128,0,128,128);
     }
 
     private void loadVaccine() {
