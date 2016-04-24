@@ -7,9 +7,18 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class Food {
     private int huggerPoint;
-    private int healthPoint;
     private Vector2 position;
-    public Food(){}
+    public Food(){
+        position = new Vector2(30,380);
+    }
+    public int getHuggerPoint() {
+        return huggerPoint;
+    }
+
+    public Vector2 getPosition() {
+        return position;
+    }
+
 
 
 }
