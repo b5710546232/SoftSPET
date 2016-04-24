@@ -15,7 +15,7 @@ public class SoftspetMain extends Game {
 		Assets.instance.load();
 		playScreen = new PlayScreen(this);
 		foodScreen = new FoodScreen(this);
-	this.setScreen(foodScreen);
+	this.setScreen(playScreen);
 	}
 	public PlayScreen getPlayScreen(){
 		return playScreen;

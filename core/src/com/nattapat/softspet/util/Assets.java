@@ -50,8 +50,10 @@ public class Assets implements Disposable, AssetErrorListener {
     private AssetManager assetManager;
     private static Texture texture_vaccine;
     private Texture food_texture;
-    public static TextureRegion bread_texutreRegion;
-    public static TextureRegion meat_textureRegion;
+    public static TextureRegion bread_btn_up;
+    public static TextureRegion meat_btn_up;
+    public static TextureRegion bread_btn_down;
+    public static TextureRegion meat_btn_down;
 
     public Assets() {
     }
@@ -73,9 +75,12 @@ public class Assets implements Disposable, AssetErrorListener {
     }
 
     private void loadFood() {
-        food_texture = new Texture(Gdx.files.internal("food.png"));
-        bread_texutreRegion = new TextureRegion(food_texture,0,0,128,128);
-        meat_textureRegion = new TextureRegion(food_texture,128,0,128,128);
+        food_texture = new Texture(Gdx.files.internal("food_button_spritesheet.png"));
+        bread_btn_up = new TextureRegion(food_texture,0,0,128,128);
+        bread_btn_down = new TextureRegion(food_texture,0,128,128,128);
+
+        meat_btn_up = new TextureRegion(food_texture,128,0,128,128);
+        meat_btn_down = new TextureRegion(food_texture,128,128,128,128);
     }
 
     private void loadVaccine() {

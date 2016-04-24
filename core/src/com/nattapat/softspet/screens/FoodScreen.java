@@ -101,16 +101,16 @@ public class FoodScreen implements Screen {
 
     private Table buildMeatButton(){
         Table layer  = new Table();
-        meatButton = new ImageButton(new TextureRegionDrawable(Assets.meat_textureRegion),
-                new TextureRegionDrawable( Assets.meat_textureRegion));
+        meatButton = new ImageButton(new TextureRegionDrawable(Assets.meat_btn_up),
+                new TextureRegionDrawable( Assets.meat_btn_down));
         layer.addActor(meatButton);
         return layer;
     }
 
     private Table buildBreadButton(){
         Table layer  = new Table();
-        breadButton = new ImageButton(new TextureRegionDrawable(Assets.bread_texutreRegion),
-                new TextureRegionDrawable( Assets.bread_texutreRegion));
+        breadButton = new ImageButton(new TextureRegionDrawable(Assets.bread_btn_up),
+                new TextureRegionDrawable( Assets.bread_btn_down));
         layer.addActor(breadButton);
         return layer;
     }
