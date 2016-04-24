@@ -84,10 +84,10 @@ public class Pet {
 
     public void takeMedicine() {
         if(sleeping)return;
+        isActive = false;
         if (isSick) {
             health = computeStat(health,10);
             if (health >= STAT_MAX / 2) isSick = false;
-            isActive = false;
             log("pet take medicine");
             setAnimation(Assets.pet_anim_take_med);
         } else {
