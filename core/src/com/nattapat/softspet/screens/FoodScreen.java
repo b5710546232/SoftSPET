@@ -76,7 +76,7 @@ public class FoodScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                ((SoftspetMain) game).getPlayScreen().getWorld().getPet().eat(10);
+                ((SoftspetMain) game).getPlayScreen().getWorld().giveBreadToPet();
                 game.setScreen(((SoftspetMain) game).getPlayScreen());
 
             }
@@ -85,7 +85,7 @@ public class FoodScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                ((SoftspetMain) game).getPlayScreen().getWorld().getPet().eat(10);
+                ((SoftspetMain) game).getPlayScreen().getWorld().giveMeatToPet();
                 game.setScreen(((SoftspetMain) game).getPlayScreen());
 
             }

@@ -1,6 +1,5 @@
 package com.nattapat.softspet.gameobjects;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.nattapat.softspet.util.Constants;
 
@@ -20,7 +19,6 @@ public class CleanerWave {
     }
     public void clean(){
         active = true;
-        Gdx.app.error("cleaner"," go clean");
     }
     public void update(float delta){
         if(active){

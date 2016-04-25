@@ -83,10 +83,8 @@ public class PlayScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                if(world.getPet().isActive && !world.getPet().sleeping)
-                game.setScreen(((SoftspetMain) game).getFoodScreen());
-//                if(world.getPet().isActive && !world.getPet().sleeping)
-//                world.getPet().eat(10);
+                if(world.isActive())
+                    game.setScreen(((SoftspetMain) game).getFoodScreen());
             }
         });
 
@@ -94,9 +92,8 @@ public class PlayScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                if(world.getPet().isActive && !world.getPet().sleeping){
-                    world.injectVaccine();
-                }
+                    world.injectVaccineToPet();
+
 
             }
         });
@@ -105,7 +102,6 @@ public class PlayScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                if(world.getPet().isActive)
                     world.switchLight();
             }
         });
@@ -114,8 +110,7 @@ public class PlayScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                if(world.getPet().isActive && !world.getPet().sleeping)
-                world.clean();
+                world.cleanPet();
             }
         });
 

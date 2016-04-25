@@ -68,6 +68,8 @@ public class GameRenderer implements Disposable {
         batch.begin();
         drawBG();
         drawVaccine();
+        drawBread();
+        drawMeat();
         drawPet(world.getPet().getStateTime());
         renderGuiFpsCounter(batch);
         drawWaveCleanner();
@@ -106,7 +108,7 @@ public class GameRenderer implements Disposable {
 
 
     private void drawWaveCleanner(){
-        batch.draw(Assets.texture_wave_cleaner,world.getCleanerWave().getPosition().x,
+        batch.draw(Assets.texture_wave_cleaner, world.getCleanerWave().getPosition().x,
                 world.getCleanerWave().getPosition().y);
     }
 
@@ -128,12 +130,40 @@ public class GameRenderer implements Disposable {
             if(world.getVaccine().active){
                 if(Assets.vaccine_anim.isAnimationFinished(world.getVaccine().getStateTime())){
                     world.getVaccine().active = false;
-                } else
+                } else{
                     batch.draw(Assets.vaccine_anim.getKeyFrame(world.getVaccine().getStateTime()),
                             world.getVaccine().getPosition().x,world.getVaccine().getPosition().y);
+                }
 
             }
     }
+
+    private void drawMeat(){
+        if(world.getMeat().active){
+            if(Assets.meat_food_anim.isAnimationFinished(world.getMeat().getStateTime())){
+                world.getMeat().active = false;
+            }
+            else{
+                batch.draw(Assets.meat_food_anim.getKeyFrame(world.getMeat().getStateTime()),
+                        world.getMeat().getPosition().x,world.getMeat().getPosition().y);
+
+            }
+        }
+    }
+
+    private void drawBread(){
+        if(world.getBread().active){
+            if(Assets.bread_food_anim.isAnimationFinished(world.getBread().getStateTime())){
+                world.getBread().active = false;
+            }
+            else{
+                batch.draw(Assets.bread_food_anim.getKeyFrame(world.getBread().getStateTime()),
+                        world.getBread().getPosition().x,world.getBread().getPosition().y);
+            }
+        }
+    }
+
+
 
     public void resize(int width, int height){
         gameViewport.update(width, height);

@@ -41,6 +41,7 @@ public class Assets implements Disposable, AssetErrorListener {
     public static Animation pet_anim_take_say_no;
     public static Animation pet_anim_happy;
     public static Animation vaccine_anim;
+    public static Animation meat_food_anim;
     public static Array<TextureRegion> texutreArray_pets = new Array<TextureRegion>();
     public static Texture texture_pet_shadow;
     public static Texture texture_wave_cleaner;
@@ -49,11 +50,14 @@ public class Assets implements Disposable, AssetErrorListener {
     public static final Assets instance = new Assets();
     private AssetManager assetManager;
     private static Texture texture_vaccine;
-    private Texture food_texture;
+    private Texture texture_food_button;
     public static TextureRegion bread_btn_up;
     public static TextureRegion meat_btn_up;
     public static TextureRegion bread_btn_down;
     public static TextureRegion meat_btn_down;
+    private static Texture texutre_food;
+    public static Animation bread_food_anim;
+
 
     public Assets() {
     }
@@ -75,12 +79,30 @@ public class Assets implements Disposable, AssetErrorListener {
     }
 
     private void loadFood() {
-        food_texture = new Texture(Gdx.files.internal("food_button_spritesheet.png"));
-        bread_btn_up = new TextureRegion(food_texture,0,0,128,128);
-        bread_btn_down = new TextureRegion(food_texture,0,128,128,128);
+        texture_food_button = new Texture(Gdx.files.internal("food_button_spritesheet.png"));
+        bread_btn_up = new TextureRegion(texture_food_button,0,0,128,128);
+        bread_btn_down = new TextureRegion(texture_food_button,0,128,128,128);
 
-        meat_btn_up = new TextureRegion(food_texture,128,0,128,128);
-        meat_btn_down = new TextureRegion(food_texture,128,128,128,128);
+        meat_btn_up = new TextureRegion(texture_food_button,128,0,128,128);
+        meat_btn_down = new TextureRegion(texture_food_button,128,128,128,128);
+
+
+        texutre_food = new Texture(Gdx.files.internal("food.png"));
+        texutre_food.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        TextureRegion[] meat_textureRegion = new TextureRegion[3];
+        meat_textureRegion[0] = new TextureRegion(texutre_food,0,0,128,128);
+        meat_textureRegion[1] = new TextureRegion(texutre_food,128,0,128,128);
+        meat_textureRegion[2] = new TextureRegion(texutre_food,256,0,128,128);
+        meat_food_anim = new Animation(1.6f,meat_textureRegion);
+        meat_food_anim.setPlayMode(NORMAL);
+
+        TextureRegion[] bread_textureRegion = new TextureRegion[3];
+        bread_textureRegion[0] = new TextureRegion(texutre_food,0,128,128,128);
+        bread_textureRegion[1] = new TextureRegion(texutre_food,128,128,128,128);
+        bread_textureRegion[2] = new TextureRegion(texutre_food,256,128,128,128);
+        bread_food_anim = new Animation(1.6f , bread_textureRegion);
+        bread_food_anim.setPlayMode(NORMAL);
+
     }
 
     private void loadVaccine() {
