@@ -2,6 +2,7 @@ package com.nattapat.softspet.gameobjects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.nattapat.softspet.stathandler.StatHandler;
@@ -11,7 +12,7 @@ import com.nattapat.softspet.util.Constants;
 /**
  * Created by nattapat on 4/8/2016 AD.
  */
-public class Pet {
+public class Pet implements GameObject {
     private static final String TAG = Pet.class.getName();
 
     private static Pet instance;
@@ -22,23 +23,24 @@ public class Pet {
     private int hunger;
     private int stamina;
 
-    private Vector2 position;
     private Vector2 shadowPosition;
 
     private boolean isSick;
     public boolean sleeping;
 
     public boolean isActive;
-
     private final int STAT_MAX = 100;
     private final int STAT_MIN = 0;
     private static int counter = 0;
     private static int counter2 = 0;
-
+    private static final float POSX = Constants.VIEWPORT_WIDTH / 2 - Assets.texutreArray_pets.get(0).getRegionWidth() / 2;
+    private static final float POSY = Constants.VIEWPORT_HEIGHT / 2 - Assets.texutreArray_pets.get(0).getRegionHeight() / 1.5f;
+    private Vector2 position;
 
     private Animation currentAnimation;
 
-    private Pet() {
+    private Pet()
+    {
         init();
     }
 
@@ -60,11 +62,9 @@ public class Pet {
         isSick = false;
         sleeping = false;
         isActive = true;
-
         setAnimation(Assets.pet_anim_idle);
+        position = new Vector2(POSX, POSY);
 
-        position = new Vector2(Constants.VIEWPORT_WIDTH / 2 - Assets.texutreArray_pets.get(0).getRegionWidth() / 2,
-                Constants.VIEWPORT_HEIGHT / 2 - Assets.texutreArray_pets.get(0).getRegionHeight() / 1.5f);
         shadowPosition = new Vector2(position.x,position.y - Assets.texutreArray_pets.get(0).getRegionHeight() / 2);
     }
 
@@ -155,10 +155,16 @@ public class Pet {
     }
 
     public void happy() {
-//        int value = MathUtils.random(5, 15);
-//        mood = computeStat(mood,15);
+        int value = MathUtils.random(5, 10);
+        mood = computeStat(mood,15);
         isActive = false;
         setAnimation(Assets.pet_anim_happy);
+    }
+
+    @Override
+    public void render(SpriteBatch batch) {
+        batch.draw(getCurrentAnimation().getKeyFrame(stateTime),getPosition().x,
+                getPosition().y);
     }
 
     public void update(float delta){
@@ -199,4 +205,5 @@ public class Pet {
     public boolean isSick() {
         return isSick;
     }
+
 }

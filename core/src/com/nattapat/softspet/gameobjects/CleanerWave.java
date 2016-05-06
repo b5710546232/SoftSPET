@@ -1,12 +1,14 @@
 package com.nattapat.softspet.gameobjects;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.nattapat.softspet.util.Assets;
 import com.nattapat.softspet.util.Constants;
 
 /**
  * Created by nattapat on 4/20/2016 AD.
  */
-public class CleanerWave {
+public class CleanerWave implements GameObject {
     private  Pet pet;
     private final int LIMITDISTANCE = -200;
     private final int SPEED = 360;
@@ -17,6 +19,12 @@ public class CleanerWave {
         pet = Pet.getInstance();
         reset();
     }
+
+    @Override
+    public void render(SpriteBatch batch) {
+        batch.draw(Assets.texture_wave_cleaner,position.x, position.y);
+    }
+
     public void clean(){
         active = true;
     }

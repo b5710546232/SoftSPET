@@ -57,6 +57,18 @@ public class Assets implements Disposable, AssetErrorListener {
     public static TextureRegion meat_btn_down;
     private static Texture texutre_food;
     public static Animation bread_food_anim;
+    private static Texture texture_rockpaperscissors;
+    public static  TextureRegion rock_btn_up;
+    public static  TextureRegion scissors_btn_down;
+    public static  TextureRegion rock_btn_down;
+    public static  TextureRegion scissors_btn_up;
+    public static  TextureRegion paper_btn_down;
+    public static  TextureRegion paper_btn_up;
+    public static TextureRegion[] minigame_textureRegions;
+    private static Texture texture_textResult;
+    public static TextureRegion win_text;
+    public static TextureRegion lose_text;
+    public static TextureRegion draw_text;
 
 
     public Assets() {
@@ -76,6 +88,35 @@ public class Assets implements Disposable, AssetErrorListener {
         loadSceneEffect();
         loadVaccine();
         loadFood();
+        loadMiniGame();
+        loadTextResultMiniGame();
+    }
+
+    private void loadTextResultMiniGame() {
+        texture_textResult = new Texture(Gdx.files.internal("text_result.png"));
+        
+        win_text = new TextureRegion(texture_textResult,0,0,128,128);
+        lose_text = new TextureRegion(texture_textResult,128,0,128,128);
+        draw_text = new TextureRegion(texture_textResult,256,0,128,128);
+    }
+
+    private void loadMiniGame() {
+        texture_rockpaperscissors = new Texture(Gdx.files.internal("rockpaperscissors.png"));
+
+        rock_btn_up = new TextureRegion(texture_rockpaperscissors,128,0,128,128);
+        rock_btn_down = new TextureRegion(texture_rockpaperscissors,128,128,128,128);
+
+        paper_btn_up = new TextureRegion(texture_rockpaperscissors,0,0,128,128);
+        paper_btn_down = new TextureRegion(texture_rockpaperscissors,0,128,128,128);
+
+        scissors_btn_up = new TextureRegion(texture_rockpaperscissors,256,0,128,128);
+        scissors_btn_down = new TextureRegion(texture_rockpaperscissors,256,128,128,128);
+        
+        minigame_textureRegions = new TextureRegion[3];
+        minigame_textureRegions[0] = rock_btn_up;
+        minigame_textureRegions[1] = paper_btn_up;
+        minigame_textureRegions[2] = scissors_btn_up;
+
     }
 
     private void loadFood() {

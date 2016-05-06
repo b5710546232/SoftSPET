@@ -1,11 +1,18 @@
 package com.nattapat.softspet.gameworld;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Array;
+import com.nattapat.softspet.SoftspetMain;
 import com.nattapat.softspet.gameobjects.Bread;
 import com.nattapat.softspet.gameobjects.CleanerWave;
+import com.nattapat.softspet.gameobjects.GameObject;
 import com.nattapat.softspet.gameobjects.Meat;
 import com.nattapat.softspet.gameobjects.Pet;
 import com.nattapat.softspet.gameobjects.Vaccine;
+import com.nattapat.softspet.util.Assets;
 
 /**
  * Created by nattapat on 4/6/2016 AD.
@@ -19,8 +26,12 @@ public class GameWorld {
     private CleanerWave cleanerWave;
     private Bread bread;
     private Meat meat;
+    private Game game;
 
-    public GameWorld(){
+    private Array<GameObject> container ;
+
+    public GameWorld(Game game){
+        this.game = (SoftspetMain)game;
         init();
     }
 
@@ -30,11 +41,24 @@ public class GameWorld {
     }
 
     private void initComponent() {
-        light = new Light();
+        light = Light.getInstance();
         vaccine = new Vaccine();
         meat = new Meat(10,360,10);
         bread = new Bread(10,360,5);
         cleanerWave = new CleanerWave();
+        container = new Array<GameObject>();
+
+        container.add(vaccine);
+        container.add(meat);
+        container.add(pet);
+        container.add(bread);
+        container.add(cleanerWave);
+    }
+
+    public void drawGameObject(SpriteBatch batch){
+        for(GameObject g : container){
+            g.render(batch);
+        }
     }
 
     private void initTamagotchi() {
@@ -59,8 +83,10 @@ public class GameWorld {
         }
 
     }
-    public Pet getPet() {
-        return pet;
+
+    public void resume(){
+        pet.stateTime = 0;
+        Assets.instance.init(new AssetManager());
     }
 
     public Light getLight() {
@@ -85,27 +111,29 @@ public class GameWorld {
 
     public void injectVaccineToPet(){
         if(!isActive())return;
-        if(pet.isSick()){
-            vaccine.inject();
-        }
-        pet.takeMedicine();
+            vaccine.inject(pet);
 
     }
-    public Meat getMeat() {
-        return meat;
-    }
+
 
     public boolean isActive(){
         return pet.isActive && !pet.sleeping;
     }
-    public CleanerWave getCleanerWave() {
-        return cleanerWave;
+
+    public Pet getPet() {
+        return pet;
     }
 
-    public Vaccine getVaccine() {
-        return vaccine;
+    public void playMiniGame() {
+        if(isActive()){
+            game.setScreen(((SoftspetMain) game).getMiniGameScreen());
+        }
+
     }
-    public Bread getBread() {
-        return bread;
+
+    public void selectFood() {
+        if(isActive()) {
+            game.setScreen(((SoftspetMain) game).getFoodScreen());
+        }
     }
 }

@@ -3,7 +3,6 @@ package com.nattapat.softspet.screens;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -41,7 +40,7 @@ public class PlayScreen implements Screen {
 
         float gameWidth = Constants.VIEWPORT_WIDTH;
         float gameHeight = screenHeight/(screenWidth / gameWidth);
-        world = new GameWorld();
+        world = new GameWorld(game);
         renderer = new GameRenderer(world,(int)gameHeight);
     }
 
@@ -83,8 +82,7 @@ public class PlayScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                if(world.isActive())
-                    game.setScreen(((SoftspetMain) game).getFoodScreen());
+               world.selectFood();
             }
         });
 
@@ -118,8 +116,7 @@ public class PlayScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                if(world.getPet().isActive && !world.getPet().sleeping)
-                Gdx.app.error(TAG,"should play some game");
+                world.playMiniGame();
             }
         });
 
@@ -139,7 +136,7 @@ public class PlayScreen implements Screen {
     public void render(float delta) {
         stateTime+=delta;
         //Draw a black bg. This prevents flickering.
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClearColor(1, 0, 0, 1);
         //// Clears the screen
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         world.update(delta);
@@ -163,8 +160,7 @@ public class PlayScreen implements Screen {
 
     @Override
     public void resume() {
-        world.getPet().stateTime = 0;
-        Assets.instance.init(new AssetManager());
+     world.resume();
     }
 
     @Override

@@ -15,8 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.nattapat.softspet.SoftspetMain;
-import com.nattapat.softspet.gameworld.GameRenderer;
-import com.nattapat.softspet.gameworld.GameWorld;
 import com.nattapat.softspet.util.Assets;
 import com.nattapat.softspet.util.Constants;
 
@@ -25,8 +23,6 @@ import com.nattapat.softspet.util.Constants;
  */
 public class FoodScreen implements Screen {
     private static final String TAG = FoodScreen.class.getName();
-    private GameRenderer renderer;
-    private GameWorld world;
     private Stage stage;
     private float stateTime = 0;
     private Image BG;

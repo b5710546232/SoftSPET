@@ -5,9 +5,17 @@ package com.nattapat.softspet.gameworld;
  */
 public class Light {
     private boolean active;
-    public static Light instance;
-    public Light(){
-        active = true;
+    private static Light instance = null;
+    private Light(){
+            active = true;
+
+    }
+
+    public static  Light getInstance(){
+        if(instance ==null){
+            instance = new Light();
+        }
+        return  instance;
     }
 
 

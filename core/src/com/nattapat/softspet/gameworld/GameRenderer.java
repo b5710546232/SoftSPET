@@ -7,7 +7,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -29,6 +31,8 @@ public class GameRenderer implements Disposable {
     private BitmapFont font;
     private BitmapFont clockfont;
     private Clock clock;
+
+    private Array<TextureRegion> list ;
 
 
     public GameRenderer(GameWorld world , int gameHeight ){
@@ -58,6 +62,7 @@ public class GameRenderer implements Disposable {
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setProjectionMatrix(camera.combined);
         clock = new Clock();
+        list = new Array();
     }
 
 
@@ -67,13 +72,9 @@ public class GameRenderer implements Disposable {
         batch.enableBlending();
         batch.begin();
         drawBG();
-        drawVaccine();
-        drawBread();
-        drawMeat();
-        drawPet(world.getPet().getStateTime());
-        renderGuiFpsCounter(batch);
-        drawWaveCleanner();
+        world.drawGameObject(batch);
         drawLight();
+        renderGuiFpsCounter(batch);
 //        clock.render(batch, clockfont);
         batch.end();
     }
@@ -98,21 +99,6 @@ public class GameRenderer implements Disposable {
     private void drawBG(){
         batch.draw(Assets.BG, 0, 0);
     }
-    private void drawPet(float stateTime){
-        if(world.getLight().isActive()) batch.draw(Assets.texture_pet_shadow,world.getPet()
-                .getShadowPosition().x,world.getPet().getShadowPosition().y);
-
-        batch.draw(world.getPet().getCurrentAnimation().getKeyFrame(stateTime), world.getPet().getPosition().x,
-                world.getPet().getPosition().y);
-    }
-
-
-    private void drawWaveCleanner(){
-        batch.draw(Assets.texture_wave_cleaner, world.getCleanerWave().getPosition().x,
-                world.getCleanerWave().getPosition().y);
-    }
-
-
 
     private void drawLight(){
         if(world.getLight().isActive()) return;
@@ -125,44 +111,6 @@ public class GameRenderer implements Disposable {
         Gdx.gl.glDisable(GL20.GL_BLEND);
 
     }
-
-    private void drawVaccine(){
-            if(world.getVaccine().active){
-                if(Assets.vaccine_anim.isAnimationFinished(world.getVaccine().getStateTime())){
-                    world.getVaccine().active = false;
-                } else{
-                    batch.draw(Assets.vaccine_anim.getKeyFrame(world.getVaccine().getStateTime()),
-                            world.getVaccine().getPosition().x,world.getVaccine().getPosition().y);
-                }
-
-            }
-    }
-
-    private void drawMeat(){
-        if(world.getMeat().active){
-            if(Assets.meat_food_anim.isAnimationFinished(world.getMeat().getStateTime())){
-                world.getMeat().active = false;
-            }
-            else{
-                batch.draw(Assets.meat_food_anim.getKeyFrame(world.getMeat().getStateTime()),
-                        world.getMeat().getPosition().x,world.getMeat().getPosition().y);
-
-            }
-        }
-    }
-
-    private void drawBread(){
-        if(world.getBread().active){
-            if(Assets.bread_food_anim.isAnimationFinished(world.getBread().getStateTime())){
-                world.getBread().active = false;
-            }
-            else{
-                batch.draw(Assets.bread_food_anim.getKeyFrame(world.getBread().getStateTime()),
-                        world.getBread().getPosition().x,world.getBread().getPosition().y);
-            }
-        }
-    }
-
 
 
     public void resize(int width, int height){
