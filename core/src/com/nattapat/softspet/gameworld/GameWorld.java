@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Timer;
 import com.nattapat.softspet.SoftspetMain;
 import com.nattapat.softspet.gameobjects.Bread;
 import com.nattapat.softspet.gameobjects.CleanerWave;
@@ -73,8 +74,30 @@ public class GameWorld {
         cleanerWave.update(delta);
     }
 
+    public  void showEmotion(){
+        if(Pet.getInstance().showemotion || !isActive()) return;
+        Pet.getInstance().showemotion = true;
+
+        Timer.schedule(new Timer.Task() {
+                           @Override
+                           public void run() {
+
+                               Pet.getInstance().showemotion = false;
+
+                           }
+                       }
+                , 3.0f        //    (delay)
+                , 0   //    (seconds)
+                , 0
+        );
+    }
+
+    public void hideEmotion(){
+        Pet.getInstance().showemotion = false;
+    }
+
     public void switchLight(){
-        if(pet.isActive) {
+        if(pet.isActive && !pet.showemotion) {
             light.click();
             if (!light.isActive()) {
                 pet.sleep();
@@ -117,7 +140,7 @@ public class GameWorld {
 
 
     public boolean isActive(){
-        return pet.isActive && !pet.sleeping;
+        return pet.isActive && !pet.sleeping &&!pet.showemotion;
     }
 
     public Pet getPet() {

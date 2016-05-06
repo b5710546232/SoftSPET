@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.nattapat.softspet.gameworld.Light;
 import com.nattapat.softspet.stathandler.StatHandler;
 import com.nattapat.softspet.util.Assets;
 import com.nattapat.softspet.util.Constants;
@@ -12,7 +13,7 @@ import com.nattapat.softspet.util.Constants;
 /**
  * Created by nattapat on 4/8/2016 AD.
  */
-public class Pet implements GameObject {
+public class Pet implements GameObject{
     private static final String TAG = Pet.class.getName();
 
     private static Pet instance;
@@ -27,6 +28,7 @@ public class Pet implements GameObject {
 
     private boolean isSick;
     public boolean sleeping;
+    public boolean showemotion;
 
     public boolean isActive;
     private final int STAT_MAX = 100;
@@ -36,6 +38,15 @@ public class Pet implements GameObject {
     private static final float POSX = Constants.VIEWPORT_WIDTH / 2 - Assets.texutreArray_pets.get(0).getRegionWidth() / 2;
     private static final float POSY = Constants.VIEWPORT_HEIGHT / 2 - Assets.texutreArray_pets.get(0).getRegionHeight() / 1.5f;
     private Vector2 position;
+
+
+
+    private final int EMOTION_HAPPY = 3;
+    private final int EMOTION_NORMAL = 2;
+    private final int EMOTION_SAD = 1;
+    private final int EMOTION_VERYDSAD = 0;
+
+    private int CURRENT_EMOTION;
 
     private Animation currentAnimation;
 
@@ -51,32 +62,51 @@ public class Pet implements GameObject {
     }
 
     private void init() {
-        mood = 0;
+        mood = 70;
         hunger = 100;
         stamina = 5;
         health = 40;
         statHandler = StatHandler.getInstance(this);
 
         stateTime = 0;
+        showemotion = false;
 
         isSick = false;
         sleeping = false;
         isActive = true;
         setAnimation(Assets.pet_anim_idle);
         position = new Vector2(POSX, POSY);
+        checkEmotion();
 
         shadowPosition = new Vector2(position.x,position.y - Assets.texutreArray_pets.get(0).getRegionHeight() / 2);
     }
 
+    private void checkEmotion(){
+        if(mood>=80){
+            CURRENT_EMOTION = EMOTION_HAPPY;
+        }
+        else if(mood<80 && mood >= 50){
+            CURRENT_EMOTION = EMOTION_NORMAL;
+        }
+        else if(mood<50 && mood >=20){
+            CURRENT_EMOTION = EMOTION_SAD;
+        }
+        else{
+            CURRENT_EMOTION = EMOTION_VERYDSAD;
+        }
+    }
+
+
+
 
     public void eat(int point) {
         if(sleeping)return;
+        isActive = false;
         if(hunger>=STAT_MAX){
+            setAnimation(Assets.pet_anim_take_say_no);
             log("pet full");
-            return;
         }
         setAnimation(Assets.pet_anim_eat);
-        isActive = false;
         hunger = computeStat(hunger,point);
         log("hunger " + hunger);
         log("pet eat");
@@ -161,10 +191,17 @@ public class Pet implements GameObject {
         setAnimation(Assets.pet_anim_happy);
     }
 
+    public void sad(){
+        isActive = false;
+        setAnimation(Assets.pet_anim_take_med);
+    }
+
     @Override
     public void render(SpriteBatch batch) {
+        if(Light.getInstance().isActive()) batch.draw(Assets.texture_pet_shadow,shadowPosition.x,shadowPosition.y);
         batch.draw(getCurrentAnimation().getKeyFrame(stateTime),getPosition().x,
                 getPosition().y);
+        drawEmotion(batch);
     }
 
     public void update(float delta){
@@ -175,6 +212,13 @@ public class Pet implements GameObject {
                 isActive = true;
             }
         }
+        checkEmotion();
+    }
+
+    private void drawEmotion(SpriteBatch batch){
+        if(showemotion)
+        batch.draw(Assets.emotion_textureRegions[CURRENT_EMOTION] , POSX + 100 , POSY + 128);
+
     }
 
     public void setAnimation(Animation anim){

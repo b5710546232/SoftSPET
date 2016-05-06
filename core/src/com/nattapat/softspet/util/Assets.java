@@ -69,6 +69,9 @@ public class Assets implements Disposable, AssetErrorListener {
     public static TextureRegion win_text;
     public static TextureRegion lose_text;
     public static TextureRegion draw_text;
+    public static Texture texture_emotion;
+    public static TextureRegion[] emotion_textureRegions;
+    public static Texture logo_texture;
 
 
     public Assets() {
@@ -90,6 +93,23 @@ public class Assets implements Disposable, AssetErrorListener {
         loadFood();
         loadMiniGame();
         loadTextResultMiniGame();
+        loadLogo();
+        loadEmotion();
+    }
+
+    private void loadEmotion() {
+        texture_emotion = new Texture(Gdx.files.internal("emo_sheet.png"));
+        emotion_textureRegions = new TextureRegion[4];
+
+        emotion_textureRegions[0] = new TextureRegion(texture_emotion,128,128,128,128);
+        emotion_textureRegions[1] = new TextureRegion(texture_emotion,0,128,128,128);
+        emotion_textureRegions[2] = new TextureRegion(texture_emotion,0,0,128,128);
+        emotion_textureRegions[3] = new TextureRegion(texture_emotion,128,0,128,128);
+
+    }
+
+    private void loadLogo() {
+        logo_texture = new Texture(Gdx.files.internal("logo.png"));
     }
 
     private void loadTextResultMiniGame() {

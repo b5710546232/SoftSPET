@@ -55,10 +55,10 @@ public class GameRenderer implements Disposable {
         batch = new SpriteBatch();
         batch.setProjectionMatrix(camera.combined);
         font = new BitmapFont();
-        clockfont = new BitmapFont(Gdx.files.internal("upheaval_TT_WHITE.fnt"));
+        clockfont = new BitmapFont(Gdx.files.internal("Visitor.fnt"));
         clockfont.getRegion().getTexture().setFilter(
-                Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        clockfont.getData().setScale(1.5f, 1.5f);
+                Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+        clockfont.getData().setScale(2.0f, 2.0f);
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setProjectionMatrix(camera.combined);
         clock = new Clock();
@@ -72,10 +72,15 @@ public class GameRenderer implements Disposable {
         batch.enableBlending();
         batch.begin();
         drawBG();
+
         world.drawGameObject(batch);
-        drawLight();
         renderGuiFpsCounter(batch);
-//        clock.render(batch, clockfont);
+        drawLight();
+        batch.end();
+
+        batch.begin();
+        clock.render(batch, clockfont);
+        drawLOGO();
         batch.end();
     }
 
@@ -99,6 +104,8 @@ public class GameRenderer implements Disposable {
     private void drawBG(){
         batch.draw(Assets.BG, 0, 0);
     }
+
+    private void drawLOGO(){ batch.draw(Assets.logo_texture,10,Constants.VIEWPORT_HEIGHT - 110);}
 
     private void drawLight(){
         if(world.getLight().isActive()) return;

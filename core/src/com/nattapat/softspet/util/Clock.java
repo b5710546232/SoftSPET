@@ -16,8 +16,8 @@ public class Clock {
     }
 
     public void render (SpriteBatch batch,BitmapFont font){
-        float x = Constants.VIEWPORT_WIDTH - 150;
-        float y = Constants.VIEWPORT_HEIGHT - 75;
+        float x = Constants.VIEWPORT_WIDTH - 175;
+        float y = Constants.VIEWPORT_HEIGHT - 60;
         font.setColor(1, 1, 1, 1);
         Calendar c = Calendar.getInstance();
         int hour = c.get(Calendar.HOUR_OF_DAY);

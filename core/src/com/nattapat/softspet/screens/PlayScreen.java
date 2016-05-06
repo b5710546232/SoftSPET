@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -33,20 +34,20 @@ public class PlayScreen implements Screen {
     private ImageButton miniGameButton;
 
 
-    public PlayScreen(Game game){
-        this.game = (SoftspetMain)game;
+    public PlayScreen(Game game) {
+        this.game = (SoftspetMain) game;
         float screenWidth = Gdx.graphics.getWidth();
         float screenHeight = Gdx.graphics.getHeight();
 
         float gameWidth = Constants.VIEWPORT_WIDTH;
-        float gameHeight = screenHeight/(screenWidth / gameWidth);
+        float gameHeight = screenHeight / (screenWidth / gameWidth);
         world = new GameWorld(game);
-        renderer = new GameRenderer(world,(int)gameHeight);
+        renderer = new GameRenderer(world, (int) gameHeight);
     }
 
     private void initButton() {
         foodButton = new ImageButton(new TextureRegionDrawable(Assets.food_button_up),
-                new TextureRegionDrawable( Assets.food_button_down));
+                new TextureRegionDrawable(Assets.food_button_down));
         foodButton.setPosition(10, 30);
         stage.addActor(foodButton);
 
@@ -64,7 +65,7 @@ public class PlayScreen implements Screen {
                 new TextureRegionDrawable(Assets.toilet_button_down));
         toiletButton.setPosition(217, 30);
         stage.addActor(toiletButton);
-        
+
         miniGameButton = new ImageButton(new TextureRegionDrawable(Assets.minigame_button_up),
                 new TextureRegionDrawable(Assets.minigame_button_down));
         miniGameButton.setPosition(286, 30);
@@ -73,6 +74,7 @@ public class PlayScreen implements Screen {
         initListener();
 
     }
+
     public GameWorld getWorld() {
         return world;
     }
@@ -82,29 +84,29 @@ public class PlayScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-               world.selectFood();
+                world.selectFood();
             }
         });
 
-        medButton.addListener(new ClickListener(){
+        medButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                    world.injectVaccineToPet();
+                world.injectVaccineToPet();
 
 
             }
         });
 
-        lightButton.addListener(new ClickListener(){
+        lightButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                    world.switchLight();
+                world.switchLight();
             }
         });
 
-        toiletButton.addListener(new ClickListener(){
+        toiletButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
@@ -112,7 +114,7 @@ public class PlayScreen implements Screen {
             }
         });
 
-        miniGameButton.addListener(new ClickListener(){
+        miniGameButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
@@ -134,20 +136,34 @@ public class PlayScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        stateTime+=delta;
+        stateTime += delta;
         //Draw a black bg. This prevents flickering.
         Gdx.gl.glClearColor(1, 0, 0, 1);
         //// Clears the screen
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         world.update(delta);
-        renderer.render(delta,stateTime);
+        renderer.render(delta, stateTime);
         stage.act(delta);
         stage.draw();
+        if (Gdx.input.justTouched() && world.isActive()) {
+            int x = Gdx.input.getX();
+            int y = Gdx.input.getY();
+            Vector3 inputs = new Vector3(x, y, 0);
+            stage.getCamera().unproject(inputs);
+//            Gdx.app.error(TAG, " pos x = " + inputs.x + " ||  posy = " + inputs.y);
+            if ((inputs.y >= 220 && inputs.y <= 360) && (inputs.x >= 115 && inputs.x <= 245)) {
+                world.showEmotion();
+
+            }
+            else{
+                world.hideEmotion();
+            }
+        }
     }
 
     @Override
     public void resize(int width, int height) {
-        renderer.resize(width,height);
+        renderer.resize(width, height);
         stage.getViewport().update(width, height, true);
 
     }
@@ -160,7 +176,7 @@ public class PlayScreen implements Screen {
 
     @Override
     public void resume() {
-     world.resume();
+        world.resume();
     }
 
     @Override

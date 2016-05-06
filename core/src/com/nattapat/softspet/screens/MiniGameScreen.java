@@ -186,13 +186,6 @@ public class MiniGameScreen implements Screen {
                     , 0
             );
 
-//            try {
-//                Thread.sleep(1000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//            reset();
-
 
         } else if ((userChoice == ROCK && rng.getValue() == SCISSORS) ||
                 (userChoice == PAPER && rng.getValue() == ROCK) ||
@@ -206,6 +199,7 @@ public class MiniGameScreen implements Screen {
                                    Gdx.app.log(TAG, "WIN");
 
                                    backToPlayScreen();
+                                   pet.sad();
 
                                }
                            }
