@@ -12,4 +12,4 @@ SOFTSPET is a project, part of Software Specification & Design Lab.
 
 
 ### DEMO
-[SOFTSPET demo ver.01](https://drive.google.com/open?id=0BycjqcAlzn1UTkxxajRTUms3UmM)
+[SOFTSPET apk demo ver.01](https://drive.google.com/open?id=0BycjqcAlzn1UTkxxajRTUms3UmM)
