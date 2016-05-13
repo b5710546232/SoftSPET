@@ -9,3 +9,7 @@ SOFTSPET is a project, part of Software Specification & Design Lab.
 * Play mini game with Pet.
 * Expression the emotion of pet.
 * Clean the Pet.
+
+
+### DEMO
+[SOFTSPET demo ver.01](https://drive.google.com/open?id=0BycjqcAlzn1UTkxxajRTUms3UmM)
