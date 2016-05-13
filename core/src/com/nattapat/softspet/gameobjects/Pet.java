@@ -9,6 +9,7 @@ import com.nattapat.softspet.gameworld.Light;
 import com.nattapat.softspet.stathandler.StatHandler;
 import com.nattapat.softspet.util.Assets;
 import com.nattapat.softspet.util.Constants;
+import com.nattapat.softspet.util.GamePreferences;
 
 /**
  * Created by nattapat on 4/8/2016 AD.
@@ -19,6 +20,7 @@ public class Pet implements GameObject{
     private static Pet instance;
     private StatHandler statHandler;
     public float stateTime;
+
     private int mood;
     private int health;
     private int hunger;
@@ -29,6 +31,7 @@ public class Pet implements GameObject{
     private boolean isSick;
     public boolean sleeping;
     public boolean showemotion;
+    public boolean isFull;
 
     public boolean isActive;
     private final int STAT_MAX = 100;
@@ -70,7 +73,6 @@ public class Pet implements GameObject{
 
         stateTime = 0;
         showemotion = false;
-
         isSick = false;
         sleeping = false;
         isActive = true;
@@ -102,14 +104,17 @@ public class Pet implements GameObject{
     public void eat(int point) {
         if(sleeping)return;
         isActive = false;
+        log("hunger " + hunger);
         if(hunger>=STAT_MAX){
             setAnimation(Assets.pet_anim_take_say_no);
             log("pet full");
+            isFull = true;
         }
-        setAnimation(Assets.pet_anim_eat);
-        hunger = computeStat(hunger,point);
-        log("hunger " + hunger);
-        log("pet eat");
+        else {
+            hunger = computeStat(hunger,point);
+            setAnimation(Assets.pet_anim_eat);
+            log("pet eat");
+        }
     }
 
     public void takeMedicine() {
@@ -137,7 +142,6 @@ public class Pet implements GameObject{
         if(sleeping)return;
         isActive = false;
         health = computeStat(health,10);
-        mood = computeStat(mood,5);
         log("cleaner");
     }
 
@@ -158,6 +162,7 @@ public class Pet implements GameObject{
         else
             value = MathUtils.random(3, 10);
         hunger = computeStat(hunger, -value);
+        if(hunger<STAT_MAX)isFull = false;
     }
 
     public void reduceHealth() {
@@ -169,6 +174,8 @@ public class Pet implements GameObject{
     public void reduceMood() {
         if (health > STAT_MAX / 2.0f || hunger > STAT_MAX) return;
         int value = MathUtils.random(5, 10);
+        if(hunger < STAT_MAX/2 || health < STAT_MAX /2 || stamina < STAT_MAX/2)
+            value -= 2;
         mood = computeStat(mood, -value);
     }
 
@@ -248,6 +255,15 @@ public class Pet implements GameObject{
 
     public boolean isSick() {
         return isSick;
+    }
+
+    public void saveData(){
+        GamePreferences.instance.save(mood,hunger,health,stamina);
+    }
+
+    public void loadData(){
+
+
     }
 
 }

@@ -6,4 +6,5 @@ package com.nattapat.softspet.util;
 public class Constants {
     public  static final  float VIEWPORT_WIDTH = 360;
     public  static final  float VIEWPORT_HEIGHT = 640;
+    public static final String PREFERENCES = "SOFTSPET";
 }

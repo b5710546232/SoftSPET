@@ -8,7 +8,7 @@ import com.nattapat.softspet.gameobjects.Pet;
  */
 public class StatHandler {
     private Pet pet;
-    private final float HUNGER_TIME = 3.0f;
+    private final float HUNGER_TIME = 15.0f;
     private final float STAMINA_TIME = 10.0f;
     private final float MOOD_TIME = 15.0f;
     private final float HEALTH_TIME = 8.0f;
@@ -39,7 +39,7 @@ public class StatHandler {
         Timer.schedule(healthDecreaser, 0, HEALTH_TIME);
         Timer.schedule(moodDecreaser, 0, MOOD_TIME);
         Timer.schedule(staminaDecreaser, 0, STAMINA_TIME);
-        Timer.instance().start();
+//        Timer.instance().start();
 
     }
 }

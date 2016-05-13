@@ -44,8 +44,8 @@ public class GameWorld {
     private void initComponent() {
         light = Light.getInstance();
         vaccine = new Vaccine();
-        meat = new Meat(10,360,10);
-        bread = new Bread(10,360,5);
+        meat = new Meat(10,360,15);
+        bread = new Bread(10,360,10);
         cleanerWave = new CleanerWave();
         container = new Array<GameObject>();
 
@@ -124,11 +124,13 @@ public class GameWorld {
 
     public void giveMeatToPet(){
         pet.eat(meat.getHuggerPoint());
+        if(!pet.isFull)
         meat.eatten();
     }
 
     public void giveBreadToPet(){
         pet.eat(bread.getHuggerPoint());
+        if(!pet.isFull)
         bread.eatten();
     }
 
