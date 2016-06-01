@@ -74,7 +74,7 @@ public class GameWorld {
         cleanerWave.update(delta);
     }
 
-    public  void showEmotion(){
+    public  void showPetEmotion(){
         if(Pet.getInstance().showemotion || !isActive()) return;
         Pet.getInstance().showemotion = true;
 

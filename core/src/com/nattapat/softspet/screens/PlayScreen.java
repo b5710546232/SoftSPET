@@ -36,13 +36,8 @@ public class PlayScreen implements Screen {
 
     public PlayScreen(Game game) {
         this.game = (SoftspetMain) game;
-        float screenWidth = Gdx.graphics.getWidth();
-        float screenHeight = Gdx.graphics.getHeight();
-
-        float gameWidth = Constants.VIEWPORT_WIDTH;
-        float gameHeight = screenHeight / (screenWidth / gameWidth);
         world = new GameWorld(game);
-        renderer = new GameRenderer(world, (int) gameHeight);
+        renderer = new GameRenderer(world);
     }
 
     private void initButton() {
@@ -142,7 +137,7 @@ public class PlayScreen implements Screen {
         //// Clears the screen
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         world.update(delta);
-        renderer.render(delta, stateTime);
+        renderer.render();
         stage.act(delta);
         stage.draw();
         if (Gdx.input.justTouched() && world.isActive()) {
@@ -152,7 +147,7 @@ public class PlayScreen implements Screen {
             stage.getCamera().unproject(inputs);
 //            Gdx.app.error(TAG, " pos x = " + inputs.x + " ||  posy = " + inputs.y);
             if ((inputs.y >= 220 && inputs.y <= 360) && (inputs.x >= 115 && inputs.x <= 245)) {
-                world.showEmotion();
+                world.showPetEmotion();
 
             }
             else{

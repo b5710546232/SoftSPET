@@ -24,17 +24,12 @@ import com.nattapat.softspet.util.Constants;
 public class FoodScreen implements Screen {
     private static final String TAG = FoodScreen.class.getName();
     private Stage stage;
-    private float stateTime = 0;
     private Image BG;
     private ImageButton breadButton;
     private ImageButton meatButton;
     private Game game;
     private final float POS_Y = 256;
-    private final float INITPOS_X = -64;
-    private final float FINALPOS_X = 360+64;
     private final float MID_X = 116;
-    private int STATE = 0;
-    private boolean active = false;
 
     public FoodScreen(Game game){
     this.game = game;
@@ -50,7 +45,7 @@ public class FoodScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
     }
 
-    public void rebuildStage(){
+    private void rebuildStage(){
         Table layerBackground = buildBackgroundLayer();
         Table layerMeatButton = buildMeatButton();
         Table layerBreadButton = buildBreadButton();

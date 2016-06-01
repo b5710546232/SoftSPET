@@ -33,6 +33,9 @@ public class SoftspetMain extends Game {
 	@Override
 	public void dispose() {
 		super.dispose();
+		playScreen.dispose();
+		foodScreen.dispose();
+		miniGameScreen.dispose();
 		Assets.instance.dispose();
 	}
 }
