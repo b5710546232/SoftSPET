@@ -50,8 +50,7 @@ public class GameWorld {
         meat = new Meat(10,360,15);
         bread = new Bread(10,360,10);
         cleanerWave = new CleanerWave();
-
-
+        worldContainer = new CompositeGameObject();
         worldContainer.add(vaccine);
         worldContainer.add(meat);
         worldContainer.add(pet);
