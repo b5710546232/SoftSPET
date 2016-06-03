@@ -68,8 +68,7 @@ public class GameRenderer implements Disposable {
         batch.enableBlending();
         batch.begin();
         drawBG();
-
-        world.drawGameObject(batch);
+        renderGameObject();
         renderGuiFpsCounter(batch);
         drawLight();
         batch.end();
@@ -78,6 +77,10 @@ public class GameRenderer implements Disposable {
         clock.render(batch, clockfont);
         drawLOGO();
         batch.end();
+    }
+
+    private void renderGameObject(){
+        world.getWorldContainer().render(batch);
     }
 
 

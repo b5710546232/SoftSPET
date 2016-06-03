@@ -3,13 +3,11 @@ package com.nattapat.softspet.gameworld;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import com.nattapat.softspet.SoftspetMain;
 import com.nattapat.softspet.gameobjects.Bread;
 import com.nattapat.softspet.gameobjects.CleanerWave;
-import com.nattapat.softspet.gameobjects.GameObject;
+import com.nattapat.softspet.gameobjects.CompositeGameObject;
 import com.nattapat.softspet.gameobjects.Meat;
 import com.nattapat.softspet.gameobjects.Pet;
 import com.nattapat.softspet.gameobjects.Vaccine;
@@ -25,11 +23,16 @@ public class GameWorld {
     private Light light;
     private Vaccine vaccine;
     private CleanerWave cleanerWave;
+
+    public CompositeGameObject getWorldContainer() {
+        return worldContainer;
+    }
+
+    private CompositeGameObject worldContainer;
     private Bread bread;
     private Meat meat;
     private Game game;
 
-    private Array<GameObject> container ;
 
     public GameWorld(Game game){
         this.game = (SoftspetMain)game;
@@ -47,20 +50,15 @@ public class GameWorld {
         meat = new Meat(10,360,15);
         bread = new Bread(10,360,10);
         cleanerWave = new CleanerWave();
-        container = new Array<GameObject>();
 
-        container.add(vaccine);
-        container.add(meat);
-        container.add(pet);
-        container.add(bread);
-        container.add(cleanerWave);
+
+        worldContainer.add(vaccine);
+        worldContainer.add(meat);
+        worldContainer.add(pet);
+        worldContainer.add(bread);
+        worldContainer.add(cleanerWave);
     }
 
-    public void drawGameObject(SpriteBatch batch){
-        for(GameObject g : container){
-            g.render(batch);
-        }
-    }
 
     private void initTamagotchi() {
         pet = Pet.getInstance();
